@@ -84,46 +84,27 @@ SAP SuccessFactors for workforce management
 SAP Customer Experience solutions for guest data
 
 Technical Details
-Directory Structure
-text
-SAP-Luxury-Hotel-Optimizer/
-├── app.py                  # Main Flask application
-├── mock/                   # Mock data generators
-│   └── sap_mock.py         # Generates hotel, booking, and event data
-├── genai/                  # AI components
-│   ├── pricing.py          # Dynamic pricing engine
-│   └── staffing.py         # Staffing optimization engine
-├── templates/              # Web interface templates
-├── static/                 # Static assets (CSS, JS)
-└── data/                   # Generated mock data
+
 Pricing Factors
-The pricing engine calculates optimal room rates using these factors:
-
-Season Factor: Adjusts prices based on seasonal demand
-
-Demand Factor: Reflects current booking trends
-
-Event Factor: Increases rates during local events
-
-Competitor Factor: Adjusts based on competitive landscape
-
-Luxury Factor: Accounts for hotel rating and quality
+- The pricing engine calculates optimal room rates using these factors:
+- Season Factor: Adjusts prices based on seasonal demand
+- Demand Factor: Reflects current booking trends
+- Event Factor: Increases rates during local events
+- Competitor Factor: Adjusts based on competitive landscape
+- Luxury Factor: Accounts for hotel rating and quality
 
 Staffing Factors
 The staffing engine optimizes labor allocation based on:
 
-Occupancy Factor: Adjusts staffing based on projected occupancy
-
-Event Factor: Increases staffing during local events
-
-Weekend Factor: Accounts for typically higher weekend demands
-
-Seasonal Factor: Adjusts for seasonal variations in service needs
+- Occupancy Factor: Adjusts staffing based on projected occupancy
+- Event Factor: Increases staffing during local events
+- Weekend Factor: Accounts for typically higher weekend demands
+- Seasonal Factor: Adjusts for seasonal variations in service needs
 
 Installation
 bash
 # Clone the repository
-git clone https://github.com/yourusername/SAP-Luxury-Hotel-Optimizer.git
+git clone https://github.com/AxelSuffrin/SAP-Luxury-Hotel-Optimizer.git
 
 # Navigate to the project directory
 cd SAP-Luxury-Hotel-Optimizer
@@ -136,26 +117,17 @@ python app.py
 Usage
 After starting the application, navigate to http://localhost:5000 to access the dashboard. From there you can:
 
-View hotels with upcoming events using the "Hotels With Events" feature
-
-Explore dynamic pricing recommendations for specific properties
-
-Review staffing plans optimized based on occupancy and events
-
-See how different factors influence both pricing and staffing decisions
-
-Screenshot
-![SAP Luxury Hotel Optimizer Dashboard](screenshot.p Process
+- View hotels with upcoming events using the "Hotels With Events" feature
+- Explore dynamic pricing recommendations for specific properties
+- Review staffing plans optimized based on occupancy and events
+- See how different factors influence both pricing and staffing decisions
 
 This project was developed as a portfolio demonstration of how SAP AI technologies could be applied in the hospitality industry. It uses:
 
-Python Flask for the backend
-
-Bootstrap for responsive UI
-
-JavaScript for interactive features
-
-Simulated AI for pricing and staffing algorithms
+- Python Flask for the backend
+- Bootstrap for responsive UI
+- JavaScript for interactive features
+- Simulated AI for pricing and staffing algorithms
 
 In a real implementation, these would be replaced with connections to actual SAP services and APIs.
 
