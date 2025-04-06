@@ -12,25 +12,16 @@ Important Note: This is a simulation created for portfolio purposes. It uses moc
 Key Features
 AI-Driven Dynamic Pricing: Calculates optimal room rates based on multiple factors:
 
-Local events (conferences, festivals, sports)
-
-Seasonal demand patterns
-
-Competitor pricing
-
-Luxury rating of the property
-
-Historical booking trends
-
-Intelligent Staffing Optimization:
-
-Department-level staffing recommendations (front desk, housekeeping, restaurant, etc.)
-
-Adjustments based on occupancy, events, and weekends
-
-Labor cost calculations and forecasting
-
-Staff allocation optimization for service quality
+- Local events (conferences, festivals, sports)
+- Seasonal demand patterns
+- Competitor pricing
+- Luxury rating of the property
+- Historical booking trends
+- Intelligent Staffing Optimization:
+- Department-level staffing recommendations (front desk, housekeeping, restaurant, etc.)
+- Adjustments based on occupancy, events, and weekends
+- Labor cost calculations and forecasting
+- Staff allocation optimization for service quality
 
 7-Day Forecasting: Projects pricing and staffing needs for the upcoming week
 
@@ -44,44 +35,34 @@ In a real-world implementation, this solution would integrate with:
 SAP AI Core
 The application simulates how SAP AI Core would host and manage machine learning models for:
 
-Price elasticity prediction
-
-Demand forecasting
-
-Staffing optimization
-
-Event impact analysis
+- Price elasticity prediction
+- Demand forecasting
+- Staffing optimization
+- Event impact analysis
 
 These models would continuously learn from outcomes, improving recommendations over time.
 
 SAP Generative AI Hub
 The natural language explanations in the application demonstrate how SAP's Generative AI Hub would:
 
-Generate human-readable explanations for pricing decisions
-
-Provide rationale for staffing recommendations
-
-Create insights from market and booking data
+- Generate human-readable explanations for pricing decisions
+- Provide rationale for staffing recommendations
+- Create insights from market and booking data
 
 SAP Business Technology Platform (BTP)
 The architecture simulates how the solution would be deployed on SAP BTP, which would provide:
 
-Scalable infrastructure for processing hotel chain data
-
-Integration capabilities with existing systems
-
-Security and compliance features
-
-API management for data connections
+- Scalable infrastructure for processing hotel chain data
+- Integration capabilities with existing systems
+- Security and compliance features
+- API management for data connections
 
 Integration with SAP S/4HANA
 In production, this solution would connect to:
 
-SAP S/4HANA for financial data and bookings
-
-SAP SuccessFactors for workforce management
-
-SAP Customer Experience solutions for guest data
+- SAP S/4HANA for financial data and bookings
+- SAP SuccessFactors for workforce management
+- SAP Customer Experience solutions for guest data
 
 Technical Details
 
