@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SAP Luxury Hotel Optimizer</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/">SAP Luxury Hotel Optimizer</a>
+            <div class="navbar-nav ms-auto">
+                <a class="nav-link text-white" href="/pricing">Dynamic Pricing</a>
+                <a class="nav-link text-white" href="/staffing">Staffing Optimization</a>
+                <a class="nav-link text-white" href="/hotels-with-events">Hotels With Events</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="page-header">
+        <div class="container">
+            <h1>Luxury Hotel Chain Optimization</h1>
+            <p class="text-muted">Leveraging SAP Business AI to optimize pricing and staffing across 300 properties</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row mb-4">
+            <div class="col-md-4">
+                <div class="stat-card">
+                    <div class="stat-value">{{ hotel_count }}</div>
+                    <div class="stat-label">Properties</div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="stat-card">
+                    <div class="stat-value">{{ country_count }}</div>
+                    <div class="stat-label">Countries</div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="stat-card">
+                    <div class="stat-value">{{ "{:,}".format(total_rooms) }}</div>
+                    <div class="stat-label">Total Rooms</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mb-4">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header bg-primary text-white">
+                        <h3 class="card-title mb-0">Find Hotels With Upcoming Events</h3>
+                    </div>
+                    <div class="card-body">
+                        <p>Finding hotels with upcoming events allows you to see how the AI optimizes pricing and staffing in response to local demand drivers.</p>
+                        <a href="/hotels-with-events" class="btn btn-primary">View Hotels With Events</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h3 class="card-title">Dynamic Pricing</h3>
+                    </div>
+                    <div class="card-body">
+                        <p>Optimize room rates in real-time based on:</p>
+                        <ul>
+                            <li>Local events and demand fluctuations</li>
+                            <li>Competitor pricing analysis</li>
+                            <li>Seasonal and day-of-week trends</li>
+                            <li>Historical booking patterns</li>
+                        </ul>
+                        <a href="/pricing" class="btn btn-primary">View Pricing Recommendations</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h3 class="card-title">Staffing Optimization</h3>
+                    </div>
+                    <div class="card-body">
+                        <p>Ensure optimal staff levels while controlling costs:</p>
+                        <ul>
+                            <li>Occupancy-based resource allocation</li>
+                            <li>Event-driven staffing adjustments</li>
+                            <li>Department-level recommendations</li>
+                            <li>Cost forecasting and optimization</li>
+                        </ul>
+                        <a href="/staffing" class="btn btn-primary">View Staffing Recommendations</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h2 class="mt-4 mb-3">Hotel Properties</h2>
+        <div class="row">
+            {% for hotel in hotels %}
+            <div class="col-md-6 col-lg-4 mb-3">
+                <div class="card hotel-card h-100">
+                    <div class="card-body">
+                        <div class="hotel-rating">{{ hotel.rating }} ★</div>
+                        <h5 class="card-title">{{ hotel.name }}</h5>
+                        <p class="card-text">
+                            <strong>Location:</strong> {{ hotel.location }}, {{ hotel.country }}<br>
+                            <strong>Rooms:</strong> {{ hotel.rooms }}
+                        </p>
+                        <div class="hotel-buttons">
+                            <a href="/pricing?hotel_id={{ hotel.hotel_id }}" class="btn btn-outline-primary btn-sm">Pricing</a>
+                            <a href="/staffing?hotel_id={{ hotel.hotel_id }}" class="btn btn-outline-primary btn-sm">Staffing</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <footer class="mt-5 mb-4 text-center text-muted">
+        <div class="container">
+            <p>SAP Luxury Hotel Optimizer - Powered by SAP Business AI</p>
+            <p class="small">A demonstration of how SAP's AI capabilities can optimize hotel operations.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

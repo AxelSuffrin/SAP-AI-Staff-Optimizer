@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Staffing Optimization - {{ hotel.name }}</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/">SAP Luxury Hotel Optimizer</a>
+            <div class="navbar-nav ms-auto">
+                <a class="nav-link text-white" href="/pricing">Dynamic Pricing</a>
+                <a class="nav-link text-white" href="/staffing">Staffing Optimization</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="page-header">
+        <div class="container">
+            <h1>Staffing Optimization</h1>
+            <p class="text-muted">AI-powered staffing recommendations based on occupancy projections and event forecasts</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row mb-4">
+            <div class="col-md-9">
+                <div class="card">
+                    <div class="card-body">
+                        <form id="hotelForm" class="d-flex gap-3">
+                            <select class="form-control" id="hotelSelect">
+                                {% for h in hotels %}
+                                <option value="{{ h.hotel_id }}" {% if h.hotel_id == hotel.hotel_id %}selected{% endif %}>
+                                    {{ h.name }} ({{ h.location }}, {{ h.country }})
+                                </option>
+                                {% endfor %}
+                            </select>
+                            <button type="submit" class="btn btn-primary">Get Staffing Plan</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card bg-light">
+                    <div class="card-body">
+                        <h5>Hotel Details</h5>
+                        <p class="mb-1"><strong>Rating:</strong> {{ hotel.rating }} ★</p>
+                        <p class="mb-1"><strong>Rooms:</strong> {{ hotel.rooms }}</p>
+                        <p class="mb-0"><strong>Location:</strong> {{ hotel.location }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="loading" class="text-center my-5">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+            <p class="mt-2">Calculating optimal staffing plan...</p>
+        </div>
+
+        <div id="results" class="d-none">
+            <!-- Results will be displayed here -->
+        </div>
+    </div>
+
+    <footer class="mt-5 mb-4 text-center text-muted">
+        <div class="container">
+            <p>SAP Luxury Hotel Optimizer - Powered by SAP Business AI</p>
+            <p class="small">A demonstration of how SAP's AI capabilities can optimize hotel operations.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get staffing for initial hotel
+            getStaffing('{{ hotel.hotel_id }}');
+            
+            // Handle hotel selection form
+            document.getElementById('hotelForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                const hotelId = document.getElementById('hotelSelect').value;
+                window.location.href = `/staffing?hotel_id=${hotelId}`;
+            });
+        });
+        
+        function getStaffing(hotelId) {
+            document.getElementById('loading').classList.remove('d-none');
+            document.getElementById('results').classList.add('d-none');
+            
+            fetch(`/api/staffing/${hotelId}`)
+                .then(response => response.json())
+                .then(data => {
+                    displayResults(data);
+                    document.getElementById('loading').classList.add('d-none');
+                    document.getElementById('results').classList.remove('d-none');
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    document.getElementById('loading').classList.add('d-none');
+                    alert('Error loading staffing data. Please try again.');
+                });
+        }
+        
+        function displayResults(data) {
+            let html = `
+                <div class="row mb-4">
+                    <div class="col-md-7">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title mb-0">Staffing Overview</h3>
+                            </div>
+                            <div class="card-body">
+                                <h4 class="mb-3">Total Weekly Cost: $${data.total_weekly_cost.toLocaleString()}</h4>
+                                
+                                <div class="explanation-box">
+                                    <h5>Staffing Recommendation</h5>
+                                    <p>${data.explanation}</p>
+                                </div>
+                                
+                                <div class="mt-4">
+                                    <h5>Department Hourly Rates</h5>
+                                    <div class="row">
+                                        ${Object.entries(data.hourly_rates).map(([dept, rate]) => `
+                                            <div class="col-md-6 mb-2">
+                                                <div class="d-flex justify-content-between">
+                                                    <span>${formatDepartment(dept)}</span>
+                                                    <span>$${rate}/hour</span>
+                                                </div>
+                                            </div>
+                                        `).join('')}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-5">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title mb-0">Staffing Factors</h3>
+                            </div>
+                            <div class="card-body p-0">
+                                <div class="pricing-factor">
+                                    <span class="factor-name">Occupancy Factor</span>
+                                    <span class="factor-value ${getFactorClass(data.staffing_factors.occupancy_factor)}">
+                                        ${data.staffing_factors.occupancy_factor}
+                                    </span>
+                                </div>
+                                <div class="pricing-factor">
+                                    <span class="factor-name">Event Factor</span>
+                                    <span class="factor-value ${getFactorClass(data.staffing_factors.event_factor)}">
+                                        ${data.staffing_factors.event_factor}
+                                    </span>
+                                </div>
+                                <div class="pricing-factor">
+                                    <span class="factor-name">Weekend Factor</span>
+                                    <span class="factor-value ${getFactorClass(data.staffing_factors.weekend_factor)}">
+                                        ${data.staffing_factors.weekend_factor}
+                                    </span>
+                                </div>
+                                <div class="pricing-factor">
+                                    <span class="factor-name">Seasonal Factor</span>
+                                    <span class="factor-value ${getFactorClass(data.staffing_factors.seasonal_factor)}">
+                                        ${data.staffing_factors.seasonal_factor}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <h3 class="mb-3">7-Day Staffing Plan</h3>
+                <div class="table-responsive">
+                    <table class="table table-striped staffing-table">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Front Desk</th>
+                                <th>Housekeeping</th>
+                                <th>Concierge</th>
+                                <th>Restaurant</th>
+                                <th>Maintenance</th>
+                                <th>Total Staff</th>
+                                <th>Daily Cost</th>
+                                <th>Events</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${data.forecast.map(day => `
+                                <tr>
+                                    <td><strong>${formatDate(day.date)}</strong></td>
+                                    <td>${day.staffing.front_desk}</td>
+                                    <td>${day.staffing.housekeeping}</td>
+                                    <td>${day.staffing.concierge}</td>
+                                    <td>${day.staffing.restaurant}</td>
+                                    <td>${day.staffing.maintenance}</td>
+                                    <td><strong>${day.total_staff}</strong></td>
+                                    <td>$${day.daily_cost.toLocaleString()}</td>
+                                    <td>${day.events.length > 0 ? 
+                                        `<span class="events-badge" title="${day.events.join(', ')}">${day.events.length} Event${day.events.length > 1 ? 's' : ''}</span>` : 
+                                        '-'}</td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                </div>
+            `;
+            
+            document.getElementById('results').innerHTML = html;
+        }
+        
+        function getFactorClass(value) {
+            if (value > 1.05) return 'factor-positive';
+            if (value < 0.95) return 'factor-negative';
+            return 'factor-neutral';
+        }
+        
+        function formatDate(dateStr) {
+            const date = new Date(dateStr);
+            const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+            const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+            return `${days[date.getDay()]}, ${months[date.getMonth()]} ${date.getDate()}`;
+        }
+        
+        function formatDepartment(dept) {
+            return dept.charAt(0).toUpperCase() + dept.slice(1).replace('_', ' ');
+        }
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+

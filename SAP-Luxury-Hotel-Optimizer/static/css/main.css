@@ -1,0 +1,201 @@
+:root {
+    --sap-blue: #0070f2;
+    --sap-dark-blue: #0050b3;
+    --sap-light-blue: #e5f0ff;
+    --sap-green: #107e3e;
+    --sap-red: #bb0000;
+    --sap-orange: #e9730c;
+    --sap-border: #e5e5e5;
+    --sap-bg: #f5f7f9;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: var(--sap-bg);
+    color: #333;
+}
+
+.navbar {
+    background-color: var(--sap-blue);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.navbar-brand {
+    color: white;
+    font-weight: 600;
+}
+
+.page-header {
+    background-color: white;
+    padding: 1.5rem 0;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid var(--sap-border);
+}
+
+.card {
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    border: 1px solid var(--sap-border);
+    margin-bottom: 1.5rem;
+}
+
+.btn-primary {
+    background-color: var(--sap-blue);
+    border-color: var(--sap-blue);
+}
+
+.btn-primary:hover {
+    background-color: var(--sap-dark-blue);
+    border-color: var(--sap-dark-blue);
+}
+
+/* Dashboard Stats */
+.stat-card {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    border: 1px solid var(--sap-border);
+    padding: 1.5rem;
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.stat-value {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--sap-blue);
+}
+
+.stat-label {
+    font-size: 1.1rem;
+    color: #666;
+    margin-top: 0.5rem;
+}
+
+/* Hotel Cards */
+.hotel-card {
+    position: relative;
+    transition: transform 0.2s;
+}
+
+.hotel-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+}
+
+.hotel-rating {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background-color: var(--sap-light-blue);
+    color: var(--sap-blue);
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-weight: 600;
+}
+
+.hotel-buttons {
+    display: flex;
+    gap: 0.5rem;
+}
+
+/* Pricing Page */
+.base-price {
+    font-size: 1.2rem;
+    color: #666;
+    margin-bottom: 0.5rem;
+}
+
+.dynamic-price {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--sap-dark-blue);
+    margin-bottom: 1rem;
+}
+
+.pricing-factor {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid var(--sap-border);
+}
+
+.pricing-factor:last-child {
+    border-bottom: none;
+}
+
+.factor-name {
+    font-weight: 500;
+}
+
+.factor-value {
+    font-weight: 600;
+}
+
+.factor-positive {
+    color: var(--sap-green);
+}
+
+.factor-negative {
+    color: var(--sap-red);
+}
+
+.factor-neutral {
+    color: #666;
+}
+
+.explanation-box {
+    background-color: var(--sap-light-blue);
+    border-left: 4px solid var(--sap-blue);
+    padding: 1rem;
+    border-radius: 0 4px 4px 0;
+}
+
+.forecast-card {
+    text-align: center;
+    padding: 0.5rem;
+}
+
+.forecast-date {
+    font-weight: 500;
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+}
+
+.forecast-price {
+    font-weight: 700;
+    font-size: 1.5rem;
+    color: var(--sap-blue);
+}
+
+.has-event {
+    border-color: var(--sap-orange);
+    background-color: rgba(233, 115, 12, 0.05);
+}
+
+.event-badge {
+    display: inline-block;
+    background-color: var(--sap-orange);
+    color: white;
+    padding: 0.15rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    margin-top: 0.5rem;
+}
+
+/* Staffing Page */
+.staffing-table th {
+    background-color: var(--sap-dark-blue);
+    color: white;
+}
+
+.events-badge {
+    display: inline-block;
+    background-color: var(--sap-light-blue);
+    color: var(--sap-blue);
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    cursor: help;
+}
+
